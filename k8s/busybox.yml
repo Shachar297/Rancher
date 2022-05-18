@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-busybox
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rancher-busybox
+  template:
+    metadata:
+      labels:
+        name: rancher-busybox
+        app: rancher
+    spec:
+      containers:
+        - name: rancher-busybox
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 9999
+

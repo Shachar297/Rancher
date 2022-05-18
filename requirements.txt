@@ -1,0 +1,5 @@
+1. Install Rancher
+2. Configurations
+3. Build containers on rancher.
+4. Containers will talk one with each other
+5. Create HEML templates to all process.

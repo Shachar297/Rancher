@@ -1,0 +1,7 @@
+nodes:
+    - address: localhost:8080
+      user: ubuntu
+      role:
+        - controlplane
+        - etcd
+        - worker

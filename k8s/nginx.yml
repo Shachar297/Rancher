@@ -1,0 +1,21 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rancher-nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rancher-nginx
+  template:
+    metadata:
+      labels:
+        name : rancher-nginx
+        app: rancher
+    spec:
+      containers:
+      - name: rancher-nginx
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8888

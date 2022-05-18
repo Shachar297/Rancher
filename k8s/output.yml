@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rancher
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rancher
+  namespace: rancher
+spec:
+  ports:
+  - nodePort: 30001
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    app: rancher
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-busybox
+  namespace: rancher
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rancher-busybox
+  template:
+    metadata:
+      labels:
+        app: rancher-busybox
+    spec:
+      containers:
+      - image: busybox
+        imagePullPolicy: IfNotPresent
+        name: rancher-busybox
+        ports:
+        - containerPort: 9999
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-nginx
+  namespace: rancher
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rancher-nginx
+  template:
+    metadata:
+      labels:
+        app: rancher-nginx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: IfNotPresent
+        name: rancher-nginx
+        ports:
+        - containerPort: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rancher-ubuntu
+  namespace: rancher
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rancher-ubuntu
+  template:
+    metadata:
+      labels:
+        app: rancher-ubuntu
+    spec:
+      containers:
+      - image: ubuntu
+        imagePullPolicy: IfNotPresent
+        name: rancher-ubuntu
+        ports:
+        - containerPort: 8989
